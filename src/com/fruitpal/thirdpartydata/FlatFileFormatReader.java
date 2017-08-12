@@ -88,22 +88,6 @@ public class FlatFileFormatReader extends ThirdPartyDataDigester
 		return commodityToSourceInfoMapper;
 	}
 
-	/**
-	 * Read pricing data from third party data prices located in the data folder relative to
-	 * this class 
-	 */
-	public Map<String, List<CommoditySourceInfo>> readPricingDataFromThirdParty()
-	{
-		Map<String, List<CommoditySourceInfo>> commodityToSourceInfoMapper = new HashMap<String, List<CommoditySourceInfo>>();
-		String dataFileDirectory = getClass().getResource("data").getPath();
-		
-		readPricingDataFromThirdParty(commodityToSourceInfoMapper, dataFileDirectory);
-		
-		return commodityToSourceInfoMapper;
-		
-		
-	}
-
 	@Override
 	public Logger getLogger() {
 		return m_log;

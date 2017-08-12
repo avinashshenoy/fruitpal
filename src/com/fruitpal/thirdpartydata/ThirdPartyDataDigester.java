@@ -113,6 +113,10 @@ public abstract class ThirdPartyDataDigester {
 			{
 				try
 				{
+					if (!(file.getName().endsWith("\\.json")))
+					{
+						getLogger().log(Level.INFO, "Found flat file: " + file.getName());
+					}
 					readPricingData(file.getPath(), commodityToSourceInfoMapper);
 				}
 				catch (Exception e )
