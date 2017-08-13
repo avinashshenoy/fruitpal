@@ -163,7 +163,7 @@ public class FlatFileFormatReaderTest {
 		assertEquals(2, commoditySourceList.size());
 		
 		sourceInfo = commoditySourceList.get(0);
-		checkCommoditySourceInfo(sourceInfo, "BANANA", "JP", 25, 1.30);
+		checkCommoditySourceInfo(sourceInfo, "BANANA", "JP", 25, 1.35);
 		
 		sourceInfo2 = commoditySourceList.get(1);
 		checkCommoditySourceInfo(sourceInfo2, "BANANA", "KN", 20, 1.42);
