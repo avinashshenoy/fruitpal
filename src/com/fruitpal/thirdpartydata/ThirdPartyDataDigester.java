@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import com.fruitpal.core.CommoditySourceInfo;
 
 public abstract class ThirdPartyDataDigester {
+	private static Logger m_logger = Logger.getLogger(ThirdPartyDataDigester.class.getName());
 	public static final String flatFileType = "flatfile";
 	
 	public abstract Map<String, List<CommoditySourceInfo>> readPricingData(String dataFilePath, Map<String, List<CommoditySourceInfo>> commodityToSourceInfoMapper) throws Exception;
@@ -54,7 +55,10 @@ public abstract class ThirdPartyDataDigester {
 				commodityToSourceInfoMapper.put(type, sourceInfoPerCommodityType);
 			}
 
-	public void listFileRecursively(String directoryPath, ArrayList<File> files) {
+	/**
+	 * https://stackoverflow.com/questions/14676407/list-all-files-in-the-folder-and-also-sub-folders/14676464#14676464 
+	 */
+	public static void listFileRecursively(String directoryPath, ArrayList<File> files) {
 	    File directory = new File(directoryPath);
 	
 	    // get all the files from a directory
@@ -91,18 +95,25 @@ public abstract class ThirdPartyDataDigester {
 		return digester;
 	}
 	
-	public abstract Logger getLogger();
+	public static Logger getLogger()
+	{
+		return m_logger;
+	}
 
 	/**
 	 * Read pricing data from 1 or more pricing data files located in the dataFileDirectoryPath
 	 * provided as parameter. If one or more data file contains data in unexpected formats, 
 	 * the issue is logged and this function skips processing of that data file.
 	 * 
+	 * Expected data file format: 
+	 * suffice ".json" =>  JSON data file
+	 * All other suffice is considered to be flatfile format. 
+	 * 
 	 * Upon completion, data is available in the {@commodityToSourceInfoMapper} map, which is a
 	 * key value mapping from Commodity Name to a collection of CommoditySourceInfo. 
 	 * commodityToSourceInfoMapper will be empty if there was no thirdparty data successfully read.   
 	 */
-	protected void readPricingDataFromThirdParty(Map<String, List<CommoditySourceInfo>> commodityToSourceInfoMapper, String dataFileDirectoryPath) {
+	public static void readPricingDataFromThirdParty(Map<String, List<CommoditySourceInfo>> commodityToSourceInfoMapper, String dataFileDirectoryPath) {
 		if (new File(dataFileDirectoryPath).exists())
 		{
 			// Build a list of file name for that potentially contain the our data set.
@@ -113,11 +124,17 @@ public abstract class ThirdPartyDataDigester {
 			{
 				try
 				{
+					ThirdPartyDataDigester digester = null ;
 					if (!(file.getName().endsWith("\\.json")))
 					{
-						getLogger().log(Level.INFO, "Found flat file: " + file.getName());
+						getLogger().log(Level.FINE, "Found flat file: " + file.getName());
+						digester = ThirdPartyDataDigester.getInstance(ThirdPartyDataDigester.flatFileType);
 					}
-					readPricingData(file.getPath(), commodityToSourceInfoMapper);
+					else
+					{
+						// Its a JSON data file. Need the JSON data parser.
+					}
+					digester.readPricingData(file.getPath(), commodityToSourceInfoMapper);
 				}
 				catch (Exception e )
 				{

@@ -1,5 +1,7 @@
 package com.fruitpal.core;
 
+import java.text.DecimalFormat;
+
 public class CommoditySourceInfo {
 	
 	public String m_commodityName;
@@ -74,11 +76,52 @@ public class CommoditySourceInfo {
 		this.m_variableCost = m_variableCost;
 	}
 	
-	public double getTotalCost()
+	/*
+	 * The cost is not being formatted for how many decimal places it need to hold. I would think
+	 * formatting would be the responsibility of the caller as each caller may have different requirement for 
+	 * how many decimal places to hold.
+	 */
+	public double getTotalCost(double baseCostPerTonFromTrader, double quantityInTons)
 	{
-		//TODO
-		return 0;
+		double totalPerTonCost = getBasePerTonCost(baseCostPerTonFromTrader);
+		double costForRequestedTon = getCostForRequestedTon(quantityInTons, totalPerTonCost);
+		
+		double totalCost = costForRequestedTon + m_fixedCost;
+		return totalCost;
 	}
+
+	public double getCostForRequestedTon(double quantityInTons, double totalPerTonCost) 
+	{
+		return totalPerTonCost * quantityInTons;
+	}
+
+	public double getBasePerTonCost(double baseCostPerTonFromTrader) 
+	{
+		return baseCostPerTonFromTrader + m_variableCost;
+	}
+	
+	/*
+	 * Unfortunately need to be kept in sync with the code in getTotalCost(..)
+	 */
+	public String getTotalCostFormatedOutput(double baseCostPerTonFromTrader, double quantityInTons)
+	{
+		double totalPerTonCost = getBasePerTonCost(baseCostPerTonFromTrader);
+		double costForRequestedTon = getCostForRequestedTon(quantityInTons, totalPerTonCost);
+		
+		double totalCost = costForRequestedTon + m_fixedCost;
+		
+		DecimalFormat decimalFormatter = new DecimalFormat("0.00"); 
+		DecimalFormat quantiyFormatter = new DecimalFormat("#.##");
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("< ").append(m_countryCode).append(" ");
+		buffer.append(decimalFormatter.format(totalCost)).append(" | (");
+		buffer.append(decimalFormatter.format(totalPerTonCost)).append("*").append(quantiyFormatter.format(quantityInTons)).append(")+");
+		buffer.append(decimalFormatter.format(m_fixedCost));
+		
+		return buffer.toString();
+	}
+	
+	
 	
 	@Override
 	public String toString() {

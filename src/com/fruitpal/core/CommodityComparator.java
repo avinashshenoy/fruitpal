@@ -3,14 +3,26 @@ package com.fruitpal.core;
 import java.util.Comparator;
 
 public class CommodityComparator implements Comparator<CommoditySourceInfo> {
+	
+	double m_baseCostPerTonFromTrader;
+	double m_quantityInTons;
+	
+	public CommodityComparator(double costPerTon, double quantity) 
+	{
+		m_baseCostPerTonFromTrader = costPerTon;
+		m_quantityInTons = quantity;
+	}
 
 	@Override
 	public int compare(CommoditySourceInfo c1, CommoditySourceInfo c2) {
-		if (c1.getTotalCost() < c2.getTotalCost())
+		double c1Cost = c1.getTotalCost(m_baseCostPerTonFromTrader, m_quantityInTons);
+		double c2Cost = c2.getTotalCost(m_baseCostPerTonFromTrader, m_quantityInTons);
+		
+		if (c1Cost < c2Cost)
 		{
 			return -1;
 		}
-		else if (c1.getTotalCost() == c2.getTotalCost())
+		else if (c1Cost == c2Cost)
 		{
 			return 0;
 		}

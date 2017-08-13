@@ -14,7 +14,7 @@ import com.fruitpal.core.CommoditySourceInfo;
 
 public class FlatFileFormatReader extends ThirdPartyDataDigester 
 {
-	private static Logger m_log = Logger.getLogger(FlatFileFormatReader.class.getName());
+	private static Logger m_FlatFilelogger = Logger.getLogger(FlatFileFormatReader.class.getName());
 	
 	public FlatFileFormatReader() 
 	{
@@ -50,7 +50,7 @@ public class FlatFileFormatReader extends ThirdPartyDataDigester
 			String currentLine;
 			while ((currentLine = bufferedReader.readLine()) != null)
 			{
-				m_log.log(Level.FINE, "Processing row: " + currentLine);
+				m_FlatFilelogger.log(Level.FINE, "Processing row: " + currentLine);
 				
 				String[] commodityInfoInputRow = currentLine.split("\\s");
 				if (commodityInfoInputRow.length != 4)
@@ -86,11 +86,6 @@ public class FlatFileFormatReader extends ThirdPartyDataDigester
 		}
 		
 		return commodityToSourceInfoMapper;
-	}
-
-	@Override
-	public Logger getLogger() {
-		return m_log;
 	}
 
 }

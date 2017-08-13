@@ -1,5 +1,7 @@
 package com.fruitpal.core;
 
+import java.util.List;
+
 public class Fruitpal {
 
 	public static void main(String[] args) {
@@ -10,9 +12,9 @@ public class Fruitpal {
 			System.exit(0);
 		}
 		
-		String commodityName = args[0];
-		double pricePerTon;
-		double numberOfTons;
+		String commodityName = args[0].toUpperCase();
+		double pricePerTon = 0.0;
+		double numberOfTons = 0.0;
 		try
 		{
 			pricePerTon = Double.parseDouble(args[1]);
@@ -31,8 +33,23 @@ public class Fruitpal {
 			System.out.println("Unexpected value for number of tons. Expected numerical value");
 		}
 		
+		Commodity commodity = new Commodity(commodityName, pricePerTon, numberOfTons);
+		List<CommoditySourceInfo> result = null;
 		
-
+		try
+		{
+			result = commodity.getCommodityInfoForTraderRequest();
+		}
+		catch (Exception e)
+		{
+			System.err.println(e.getMessage());
+			System.exit(-1);
+		}
+		
+		for (CommoditySourceInfo perCountryPricing : result)
+		{
+			System.out.println(perCountryPricing.getTotalCostFormatedOutput(pricePerTon, numberOfTons));
+		}
 	}
 
 }
