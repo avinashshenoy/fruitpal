@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="fruitpal">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../../eclipse/jee-neon/Eclipse.app/Contents/Eclipse/"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="../../../.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+        <pathelement location="../../../.p2/pool/plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    </path>
+    <path id="fruitpal.classpath">
+        <pathelement location="bin"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/jackson-core-2.9.0.jar"/>
+        <pathelement location="lib/jackson-databind-2.9.0.jar"/>
+        <pathelement location="lib/jackson-annotations-2.9.0.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="fruitpal.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="FlatFileFormatReaderTest.testReadPricingData">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.FlatFileFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="FlatFileFormatReaderTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.FlatFileFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="FlatFileFormatReaderTest.testReadPricing_invalidFixedPrice">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.FlatFileFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="FlatFileFormatReaderTest.testReadPricing_invalidVariablePrice">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.FlatFileFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="FlatFileFormatReaderTest.testReadPricing_missingDataField">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.FlatFileFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="FlatFileFormatReaderTest.testReadPricing_mangoEntriesDataField">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.FlatFileFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="FlatFileFormatReaderTest.testReadPricing_twoCommodityEntriesDataField">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.FlatFileFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="FlatFileFormatReaderTest.testReadPricing_twoInputDataCombined">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.FlatFileFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="Fruitpal_incorrect_invocation">
+        <java classname="com.fruitpal.core.Fruitpal" failonerror="true" fork="yes">
+            <arg line="aa 45"/>
+            <classpath refid="fruitpal.classpath"/>
+        </java>
+    </target>
+    <target name="Fruitpal mango 53 405">
+        <java classname="com.fruitpal.core.Fruitpal" failonerror="true" fork="yes">
+            <arg line="mango 53 405"/>
+            <classpath refid="fruitpal.classpath"/>
+        </java>
+    </target>
+    <target name="CommodityTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.CommodityTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="CommodityTest.testInvalidCommodityName">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.CommodityTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="com.fruitpal.thirdpartydata.test">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.CommodityTest" todir="${junit.output.dir}"/>
+            <test name="com.fruitpal.thirdpartydata.test.FlatFileFormatReaderTest" todir="${junit.output.dir}"/>
+            <test name="com.fruitpal.thirdpartydata.test.JsonFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="CommodityTest.testAppleExample">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.CommodityTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="CommodityTest.testBananaExample">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.CommodityTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="JsonFormatReaderTest.testReadGoodJsonDataFile">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.JsonFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="JsonFormatReaderTest.testReadPricing_invalidFixedPrice">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.JsonFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="JsonFormatReaderTest.testReadPricing_invalidVariablePrice">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.JsonFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="JsonFormatReaderTest.testReadPricing_EmptyDataFile">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.JsonFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="JsonFormatReaderTest.testReadPricing_missingDataField">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.JsonFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="JsonFormatReaderTest.testReadPricing_twoCommodityEntriesDataField">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.JsonFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="JsonFormatReaderTest.testReadPricing_twoInputDataCombined">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.JsonFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="JsonFormatReaderTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.fruitpal.thirdpartydata.test.JsonFormatReaderTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="fruitpal.classpath"/>
+        </junit>
+    </target>
+    <target name="Fruitpal plum 53 405">
+        <java classname="com.fruitpal.core.Fruitpal" failonerror="true" fork="yes">
+            <arg line="plum 53 405"/>
+            <classpath refid="fruitpal.classpath"/>
+        </java>
+    </target>
+    <target name="Fruitpal">
+        <java classname="com.fruitpal.core.Fruitpal" failonerror="true" fork="yes">
+	    <arg line="${args}"/>
+            <classpath refid="fruitpal.classpath"/>
+        </java>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+</project>
