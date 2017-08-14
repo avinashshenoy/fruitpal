@@ -1,0 +1,9 @@
+Hi! Welcome to Fruitpal Demo.
+
+Pre-req: You need "Ant" build tool to be installed for compiling this program. 
+
+To compile, please run: "ant clean build"
+
+To execute the program, please run: "ant fruitpal". The program prompts you for arguments you would like to pass into the execution. Enter the input you would like to pass to the program and hit enter.
+
+
