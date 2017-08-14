@@ -13,6 +13,7 @@ import com.fruitpal.core.CommoditySourceInfo;
 public abstract class ThirdPartyDataDigester {
 	private static Logger m_logger = Logger.getLogger(ThirdPartyDataDigester.class.getName());
 	public static final String flatFileType = "flatfile";
+	public static final String jsonFileType = "jsonfile";
 	
 	public abstract Map<String, List<CommoditySourceInfo>> readPricingData(String dataFilePath, Map<String, List<CommoditySourceInfo>> commodityToSourceInfoMapper) throws Exception;
 	
@@ -43,17 +44,26 @@ public abstract class ThirdPartyDataDigester {
 			double variableCost) {
 				CommoditySourceInfo commodityInfo = new CommoditySourceInfo(type, countryCode, fixedCost, variableCost);
 				
-				List<CommoditySourceInfo> sourceInfoPerCommodityType = commodityToSourceInfoMapper.get(type);
-				if (sourceInfoPerCommodityType == null)
-				{
-					// First entry in the listing, create a new listing
-					sourceInfoPerCommodityType = new ArrayList<CommoditySourceInfo>();
-				}
-				
-				// Add this entry to our per commodity list and update the tracker with the new list.
-				sourceInfoPerCommodityType.add(commodityInfo);
-				commodityToSourceInfoMapper.put(type, sourceInfoPerCommodityType);
+				updateCommoditySourceInfoWithNewPricingData(commodityToSourceInfoMapper, commodityInfo);
 			}
+
+	public void updateCommoditySourceInfoWithNewPricingData(
+			Map<String, List<CommoditySourceInfo>> commodityToSourceInfoMapper,
+			CommoditySourceInfo commodityInfo) 
+	{
+		String type = commodityInfo.getCommodityName();
+		
+		List<CommoditySourceInfo> sourceInfoPerCommodityType = commodityToSourceInfoMapper.get(type);
+		if (sourceInfoPerCommodityType == null)
+		{
+			// First entry in the listing, create a new listing
+			sourceInfoPerCommodityType = new ArrayList<CommoditySourceInfo>();
+		}
+		
+		// Add this entry to our per commodity list and update the tracker with the new list.
+		sourceInfoPerCommodityType.add(commodityInfo);
+		commodityToSourceInfoMapper.put(type, sourceInfoPerCommodityType);
+	}
 
 	/**
 	 * https://stackoverflow.com/questions/14676407/list-all-files-in-the-folder-and-also-sub-folders/14676464#14676464 
@@ -86,6 +96,10 @@ public abstract class ThirdPartyDataDigester {
 		{
 		case flatFileType:
 			digester = new FlatFileFormatReader();
+			break;
+			
+		case jsonFileType:
+			digester = new JsonFileFormatReader();
 			break;
 			
 		default :
@@ -125,14 +139,16 @@ public abstract class ThirdPartyDataDigester {
 				try
 				{
 					ThirdPartyDataDigester digester = null ;
-					if (!(file.getName().endsWith("\\.json")))
+					if (!(file.getName().endsWith(".json")))
 					{
-						getLogger().log(Level.FINE, "Found flat file: " + file.getName());
+						getLogger().log(Level.INFO, "Found flat file: " + file.getName());
 						digester = ThirdPartyDataDigester.getInstance(ThirdPartyDataDigester.flatFileType);
 					}
 					else
 					{
+						getLogger().log(Level.INFO, "Found json file: " + file.getName());
 						// Its a JSON data file. Need the JSON data parser.
+						digester = ThirdPartyDataDigester.getInstance(ThirdPartyDataDigester.jsonFileType);
 					}
 					digester.readPricingData(file.getPath(), commodityToSourceInfoMapper);
 				}

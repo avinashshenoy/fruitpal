@@ -1,0 +1,20 @@
+[
+	{
+		"COUNTRY":"MX",
+		"COMMODITY":"mango",
+		"FIXED_OVERHEAD":"32.00",
+		"VARIABLE_OVERHEAD":"1.24"
+	},
+	{
+		"COUNTRY":"CB",
+		"COMMODITY":"apple",
+		"FIXED_OVERHEAD":"25",
+		"VARIABLE_OVERHEAD":"1.30"
+	},
+	{
+		"COUNTRY":"BR",
+		"COMMODITY":"mango",
+		"FIXED_OVERHEAD":"20.00",
+		"VARIABLE_OVERHEAD":"1.42"
+	}
+]

@@ -1,0 +1,20 @@
+[
+	{
+		"COUNTRY":"MX",
+		"COMMODITY":"plum",
+		"FIXED_OVERHEAD":"32.00",
+		"VARIABLE_OVERHEAD":"1.24"
+	},
+	{
+		"COUNTRY":"CB",
+		"COMMODITY":"peach",
+		"FIXED_OVERHEAD":"25.00",
+		"VARIABLE_OVERHEAD":"1.30"
+	},
+	{
+		"COUNTRY":"BR",
+		"COMMODITY":"plum",
+		"FIXED_OVERHEAD":"20.00",
+		"VARIABLE_OVERHEAD":"1.42"
+	}
+]

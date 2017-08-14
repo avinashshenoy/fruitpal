@@ -130,7 +130,7 @@ public class FlatFileFormatReaderTest {
 		assertNotNull(data);
 		
 		// Expect only one commodity type in this test file, which is MANGO.
-		assertTrue(data.size() == 4);
+		assertTrue(data.size() == 8);
 		
 		// Check for data from inputData
 		List<CommoditySourceInfo> commoditySourceList = data.get("MANGO");
@@ -169,7 +169,7 @@ public class FlatFileFormatReaderTest {
 		checkCommoditySourceInfo(sourceInfo2, "BANANA", "KN", 20, 1.42);
 	}
 	
-	private void checkCommoditySourceInfo(CommoditySourceInfo info, String expectedName, String expectedCountryCode, double expectedFixedValue, double expectedVariableValue)
+	public static void checkCommoditySourceInfo(CommoditySourceInfo info, String expectedName, String expectedCountryCode, double expectedFixedValue, double expectedVariableValue)
 	{
 		assertNotNull(info);
 		assertEquals(expectedName, info.getCommodityName());

@@ -1,0 +1,20 @@
+[
+	{
+		"COUNTRY":"MX",
+		"COMMODITY":"strawberry",
+		"FIXED_OVERHEAD":"32.00",
+		"VARIABLE_OVERHEAD":"1.24"
+	},
+	{
+		"COUNTRY":"JP",
+		"COMMODITY":"rasberry",
+		"FIXED_OVERHEAD":"25.00",
+		"VARIABLE_OVERHEAD":"1.35"
+	},
+	{
+		"COUNTRY":"KN",
+		"COMMODITY":"rasberry",
+		"FIXED_OVERHEAD":"20.00",
+		"VARIABLE_OVERHEAD":"1.42"
+	}
+]
