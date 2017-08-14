@@ -8,7 +8,7 @@ public class Fruitpal {
 		
 		if (args.length != 3)
 		{
-			System.out.println("Incorrect invocation. Expected usage: \"Fruitpal COMMODITY_NAME PRICE_PER_TON NUMBER_OF_TONS\"");
+			System.out.println("Incorrect invocation. Expected usage: \"fruitpal COMMODITY_NAME PRICE_PER_TON NUMBER_OF_TONS\"");
 			System.exit(0);
 		}
 		
@@ -43,7 +43,7 @@ public class Fruitpal {
 		catch (Exception e)
 		{
 			System.err.println(e.getMessage());
-			System.exit(-1);
+			System.exit(0);
 		}
 		
 		for (CommoditySourceInfo perCountryPricing : result)

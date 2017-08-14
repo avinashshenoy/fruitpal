@@ -38,7 +38,7 @@
     <target name="build-subprojects"/>
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+        <javac debug="false" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
             <classpath refid="fruitpal.classpath"/>
         </javac>
@@ -266,11 +266,14 @@
             <classpath refid="fruitpal.classpath"/>
         </java>
     </target>
-    <target name="Fruitpal">
+    <target name="fruitpal" depends="input-runargs">
         <java classname="com.fruitpal.core.Fruitpal" failonerror="true" fork="yes">
 	    <arg line="${args}"/>
             <classpath refid="fruitpal.classpath"/>
         </java>
+    </target>
+    <target name="input-runargs" unless="args" description="prompts for command line arguments if necessary">
+  	<input addProperty="args" message="Type the desired command line arguments. For example: mango 40 305"/>
     </target>
     <target name="junitreport">
         <junitreport todir="${junit.output.dir}">

@@ -141,12 +141,12 @@ public abstract class ThirdPartyDataDigester {
 					ThirdPartyDataDigester digester = null ;
 					if (!(file.getName().endsWith(".json")))
 					{
-						getLogger().log(Level.INFO, "Found flat file: " + file.getName());
+						getLogger().log(Level.FINE, "Found flat file: " + file.getName());
 						digester = ThirdPartyDataDigester.getInstance(ThirdPartyDataDigester.flatFileType);
 					}
 					else
 					{
-						getLogger().log(Level.INFO, "Found json file: " + file.getName());
+						getLogger().log(Level.FINE, "Found json file: " + file.getName());
 						// Its a JSON data file. Need the JSON data parser.
 						digester = ThirdPartyDataDigester.getInstance(ThirdPartyDataDigester.jsonFileType);
 					}
