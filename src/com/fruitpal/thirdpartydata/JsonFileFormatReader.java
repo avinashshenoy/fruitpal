@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
@@ -29,8 +30,7 @@ public class JsonFileFormatReader extends ThirdPartyDataDigester {
 	public Map<String, List<CommoditySourceInfo>> readPricingData(String dataFilePath,
 			Map<String, List<CommoditySourceInfo>> commodityToSourceInfoMapper) throws Exception 
 	{
-		
-		// Initialize it if its not already setup
+		// Initialize it if it's not already setup
 		if (commodityToSourceInfoMapper == null)
 		{
 			commodityToSourceInfoMapper = new HashMap<String, List<CommoditySourceInfo>>();
@@ -42,57 +42,69 @@ public class JsonFileFormatReader extends ThirdPartyDataDigester {
 		
 		JsonToken startArrayToken = parser.nextToken();
 		
-		if (JsonToken.START_ARRAY.equals(startArrayToken))
+		if (startArrayToken != null)
 		{
-			// found the start of the JSON Array. Lets read all the individual array
-			// entries and extract the pricing data records.
-			JsonToken token;
-			while( (token = parser.nextToken()) != JsonToken.END_ARRAY )
+			// We have a non-empty data file.
+			if (JsonToken.START_ARRAY.equals(startArrayToken))
 			{
-				//JsonToken token = parser.nextToken();
-				if (JsonToken.START_OBJECT.equals(token))
+				// Found the start of the JSON Array. Lets read all the individual array
+				// entries and extract the pricing data records.
+				JsonToken token;
+				while( (token = parser.nextToken()) != JsonToken.END_ARRAY )
 				{
-					// Start of a new pricing entry.
-					JsonToken fieldNameToken ;
-					int fieldCounter = 0;
-					CommoditySourceInfo dataPoint = new CommoditySourceInfo();
-					
-					while ((fieldNameToken = parser.nextToken()) != null &&
-							fieldCounter < FIELDS.length) // no more token left
+					if (JsonToken.START_OBJECT.equals(token))
 					{
-						if (JsonToken.FIELD_NAME.equals(fieldNameToken))
+						// Start of a new pricing entry.
+						JsonToken fieldNameToken ;
+						int fieldCounter = 0;
+						CommoditySourceInfo dataPoint = new CommoditySourceInfo();
+						
+						while ((fieldNameToken = parser.nextToken()) != null &&
+								fieldCounter < FIELDS.length) // no more token left
 						{
-							// Got a field name. Now Verify that it is the field we expect in
-							// our JSON data file.
-							// Could be COUNTRY, COMMODITY, FIXED_OVERHEAD, VARIABE_OVERHEAD
-							String dataField = parser.getCurrentName(); 
-							verifyField(FIELDS[fieldCounter], dataField);
-							parser.nextToken();
-							fillCommoditySourceStructure(dataPoint, dataField, parser);
-							fieldCounter++;
+							if (JsonToken.FIELD_NAME.equals(fieldNameToken))
+							{
+								// Got a field name. Now Verify that it is the field we expect in
+								// our JSON data file.
+								// Could be COUNTRY, COMMODITY, FIXED_OVERHEAD, VARIABE_OVERHEAD
+								String dataField = parser.getCurrentName(); 
+								verifyField(FIELDS[fieldCounter], dataField);
+								parser.nextToken();
+								fillCommoditySourceStructure(dataPoint, dataField, parser);
+								fieldCounter++;
+							}
+							else 
+							{
+								throw new Exception("Found invalid token in the JSON data file. Expected to find more field in the JSON tuple");
+							}
 						}
-						else 
+						
+						if (fieldCounter != FIELDS.length)
 						{
-							throw new Exception("Found invalid token in the JSON data file.");
+							throw new Exception("We did not seem to get all the field that we expected to be present in our data row.");
 						}
+						
+						updateCommoditySourceInfoWithNewPricingData(commodityToSourceInfoMapper, dataPoint);
+						// move on to next data row.
+						
 					}
-					
-					if (fieldCounter != FIELDS.length)
+					else if(JsonToken.END_OBJECT.equals(token))
 					{
-						throw new Exception("We did seem to get all the field that we expected to be present in our data row.");
+						// Move on to the next data row.
 					}
-					
-					updateCommoditySourceInfoWithNewPricingData(commodityToSourceInfoMapper, dataPoint);
-					// move on to next data row.
-					
-				}
-				else if(JsonToken.END_OBJECT.equals(token))
-				{
-					// Move on to the next data row.
-				}
-			}// end while not json array end token
-			
-			// At this point we have parsed all the individual pricing data rows in the json file.
+				}// end while not json array end token
+				
+				// At this point we have parsed all the individual pricing data rows in the json file.
+			}
+			else 
+			{
+				getLogger().log(Level.FINE, "The json input file isnt formatted as expected. Expected to find Start Array token");
+				throw new Exception("The json input file isnt formatted as expected. Expected to find Start Array token");
+			}
+		}
+		else
+		{
+			getLogger().log(Level.FINE, "The json data file is empty");
 		}
 
 		return commodityToSourceInfoMapper;

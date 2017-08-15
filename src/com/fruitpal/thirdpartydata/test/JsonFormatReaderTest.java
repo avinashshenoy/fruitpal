@@ -74,7 +74,7 @@ public class JsonFormatReaderTest {
 	}
 	
 	@Test
-	public void testReadPricing_missingDataField() throws Exception
+	public void testReadPricing_missingDataAndIncorrectOrderField() throws Exception
 	{
 		String testFile = getClass().getResource("missingDataFieldFile.json").getPath();
 		try
@@ -85,6 +85,21 @@ public class JsonFormatReaderTest {
 		catch (Exception e)
 		{
 			assertTrue(e.getMessage().contains("Cost data in JSON data file does not match expected format. Expected field"));
+		}
+	}
+	
+	@Test
+	public void testReadPricing_missingDataField() throws Exception
+	{
+		String testFile = getClass().getResource("missingDataFieldFile2.json").getPath();
+		try
+		{
+			jsonFile.readPricingData(testFile, null);
+			fail("Should have failed to parse the invalid data");
+		}
+		catch (Exception e)
+		{
+			assertTrue(e.getMessage().contains("Found invalid token in the JSON data file. Expected to find more field in the JSON tuple"));
 		}
 	}
 	
@@ -166,6 +181,21 @@ public class JsonFormatReaderTest {
 		
 		sourceInfo2 = commoditySourceList.get(1);
 		FlatFileFormatReaderTest.checkCommoditySourceInfo(sourceInfo2, "RASBERRY", "KN", 20, 1.42);
+	}
+	
+	@Test
+	public void testReadPricing_invalidJsonDataFile() throws Exception
+	{
+		String testFile = getClass().getResource("badJsonFile.json").getPath();
+		try
+		{
+			jsonFile.readPricingData(testFile, null);
+			fail("Should have failed to parse the invalid data");
+		}
+		catch (Exception e)
+		{
+			assertEquals("The json input file isnt formatted as expected. Expected to find Start Array token", e.getMessage());
+		}
 	}
 
 }
