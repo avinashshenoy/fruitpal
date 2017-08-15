@@ -28,6 +28,7 @@ public class Fruitpal {
 		catch (NumberFormatException e)
 		{
 			System.out.println("Unexpected value for pricePerTon. Expected numerical value");
+			System.exit(0);
 		}
 		
 		try
@@ -37,6 +38,7 @@ public class Fruitpal {
 		catch (NumberFormatException e)
 		{
 			System.out.println("Unexpected value for number of tons. Expected numerical value");
+			System.exit(0);
 		}
 		
 		Commodity commodity = new Commodity(commodityName, pricePerTon, numberOfTons);
