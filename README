@@ -1,6 +1,6 @@
 Hi! Welcome to Fruitpal Demo.
 
-Pre-req: You need "Ant" build tool to be installed for compiling this program. 
+Pre-req: You need "Ant" build tool to be installed for compiling this program. Details at http://ant.apache.org/manual/install.html
 
 To compile, please run: "ant clean build"
 
