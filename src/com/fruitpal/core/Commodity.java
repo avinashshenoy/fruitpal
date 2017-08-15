@@ -31,18 +31,20 @@ public class Commodity {
 	{
 		// Do the data loads to pull in the pricing from third party data source. Assumed to be in 
 		// file system at relative path "../thirdpartydata/data". How many every data files there are,
-		// it gets read and then return a accumulated of pricing data per commodity type/name.
+		// it gets read and then returns a accumulation of pricing data per commodity type/name.
 		Map<String, List<CommoditySourceInfo>> commodityToSourceInfoMapper = new HashMap<String, List<CommoditySourceInfo>>();
 		String dataFileDirectory = getClass().getResource("../thirdpartydata/data").getPath();
 		
 		ThirdPartyDataDigester.readPricingDataFromThirdParty(commodityToSourceInfoMapper, dataFileDirectory);
 		
+		// Get the pricing data for the commodity that the trader requested.
 		List<CommoditySourceInfo> pricingInfoForRequestType = commodityToSourceInfoMapper.get(commodityName);
 		
 		if (pricingInfoForRequestType == null)
 		{
 			throw new Exception("We dont have any pricing information for the given commodity at the moment.");
 		}
+		
 		CommodityComparator comparator = new CommodityComparator(pricePerTon, numberOfTons); 
 		Collections.sort(pricingInfoForRequestType, Collections.reverseOrder(comparator));
 		

@@ -2,6 +2,12 @@ package com.fruitpal.core;
 
 import java.util.List;
 
+/**
+ * Main class that parses the command line arguments for the invocation
+ * and calls out to business logic that deals with the caculating the pricing data.
+ * @author ashenoy
+ *
+ */
 public class Fruitpal {
 
 	public static void main(String[] args) {

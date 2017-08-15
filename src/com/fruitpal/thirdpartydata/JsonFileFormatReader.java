@@ -12,6 +12,11 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fruitpal.core.CommoditySourceInfo;
 
+/**
+ * Reader for 3rd party data received in json file format.
+ * @author ashenoy
+ *
+ */
 public class JsonFileFormatReader extends ThirdPartyDataDigester {
 	
 	public static final String COUNTRY = "COUNTRY";

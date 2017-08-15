@@ -12,6 +12,11 @@ import java.util.logging.Logger;
 
 import com.fruitpal.core.CommoditySourceInfo;
 
+/**
+ * Reader for 3rd party data received in flat file format.
+ * @author ashenoy
+ *
+ */
 public class FlatFileFormatReader extends ThirdPartyDataDigester 
 {
 	private static Logger m_FlatFilelogger = Logger.getLogger(FlatFileFormatReader.class.getName());
@@ -73,6 +78,7 @@ public class FlatFileFormatReader extends ThirdPartyDataDigester
 					throw new Exception("Cost data in flat file did not match expectation for cost data format.", e);
 				}
 				
+				// we have all needed data field, so lets create the CommoditySourceInfo data point.
 				updateCommoditySourceInfoWithNewPricingData(commodityToSourceInfoMapper, 
 															type, 
 															countryCode, 

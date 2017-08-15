@@ -2,6 +2,12 @@ package com.fruitpal.core;
 
 import java.util.Comparator;
 
+/**
+ * Comparator class that compared two CommoditySourceInfo objects based on the
+ * totalCost information. This comparator give a ascending order sort.
+ * @author ashenoy
+ *
+ */
 public class CommodityComparator implements Comparator<CommoditySourceInfo> {
 	
 	double m_baseCostPerTonFromTrader;

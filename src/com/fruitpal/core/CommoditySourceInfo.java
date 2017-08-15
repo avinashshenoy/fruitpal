@@ -2,6 +2,11 @@ package com.fruitpal.core;
 
 import java.text.DecimalFormat;
 
+/**
+ * Mapping for the Commodity pricing information received from 3rd party
+ * @author ashenoy
+ *
+ */
 public class CommoditySourceInfo {
 	
 	public String m_commodityName;
